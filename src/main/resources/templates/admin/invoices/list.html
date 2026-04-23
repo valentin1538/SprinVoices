@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Suivi des Missions & Factures</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <style>
+        /* CSS additionnel pour la pagination et la recherche */
+        .pagination { display: flex; list-style: none; padding: 0; gap: 0.5rem; justify-content: center; margin: 0; }
+        .page-item a { padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: var(--radius-md); background: white; color: var(--text-main); font-weight: 500; }
+        .page-item a:hover { background: var(--bg-body); text-decoration: none; }
+        .page-item.active a { background: var(--primary); color: white; border-color: var(--primary); }
+        .page-item.disabled a { color: var(--text-muted); pointer-events: none; opacity: 0.6; }
+        
+        .search-bar { display: flex; gap: 0.5rem; }
+        .search-input { min-width: 300px; padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: var(--radius-md); }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        
+        <div class="flex-between">
+            <h1>Suivi des Missions & Factures</h1>
+            <div>
+                <a th:href="@{/admin/dashboard}" style="margin-right: 15px; color: var(--text-muted);">⬅ Retour au Dashboard</a>
+                <a th:href="@{/admin/factures/nouveau}" class="btn btn-success">+ Initialiser une mission</a>
+            </div>
+        </div>
+        
+        <div class="card" style="padding: 1rem 2rem; margin-bottom: 1rem;">
+            <form th:action="@{/admin/factures}" method="get" class="search-bar">
+                <input type="text" name="keyword" th:value="${keyword}" class="search-input" placeholder="Rechercher par projet, mission, client...">
+                <button type="submit" class="btn btn-primary">🔍 Filtrer</button>
+                <a th:href="@{/admin/factures}" class="btn" style="background: #f1f5f9; color: var(--text-muted);">Réinitialiser</a>
+            </form>
+        </div>
+
+        <div th:if="${successMessage}" class="alert alert-success">
+            <span th:text="${successMessage}"></span>
+        </div>
+        <div th:if="${errorMessage}" class="alert alert-danger">
+            <span th:text="${errorMessage}"></span>
+        </div>
+
+        <div class="card table-wrapper" style="padding: 0;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Projet / Mission</th>
+                        <th>Partenaire Client</th>
+                        <th>Montant Total</th>
+                        <th>Statut</th>
+                        <th style="text-align: right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="invoice : ${invoices}">
+                        <td th:text="'#' + ${invoice.id}" class="tech-font" style="font-size: 1.1rem;"></td>
+                        <td th:text="${invoice.designation}" style="font-weight: 500;"></td>
+                        <td th:text="${invoice.customer.corporateName}"></td>
+                        <td th:text="${invoice.getTotal() + ' €'}" style="font-weight: 600;"></td>
+                        <td>
+                            <span th:if="${invoice.paidAt != null}" class="badge badge-success">PAYÉE</span>
+                            <span th:if="${invoice.paidAt == null and invoice.invoicedAt != null}" class="badge badge-warning">FACTURÉE</span>
+                            <span th:if="${invoice.paidAt == null and invoice.invoicedAt == null}" class="badge badge-neutral">BROUILLON</span>
+                        </td>
+                        <td style="text-align: right;">
+                            <a th:href="@{/admin/factures/{id}(id=${invoice.id})}" class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">Détails ➔</a>
+                            <a th:href="@{/admin/factures/supprimer/{id}(id=${invoice.id})}" class="btn btn-danger" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; margin-left: 5px;" onclick="return confirm('Supprimer cette facture et toutes ses lignes ?');">Supprimer</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(invoices)}">
+                        <td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-muted); font-style: italic;">Aucune facture trouvée pour cette recherche.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div th:if="${totalPages > 1}" style="padding: 1rem; border-top: 1px solid var(--border); background: #f8fafc;">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
+                        <a th:href="@{/admin/factures(page=${currentPage - 1}, keyword=${keyword})}">« Précédent</a>
+                    </li>
+                    
+                    <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" class="page-item" th:classappend="${currentPage == i ? 'active' : ''}">
+                        <a th:href="@{/admin/factures(page=${i}, keyword=${keyword})}" th:text="${i + 1}"></a>
+                    </li>
+                    
+                    <li class="page-item" th:classappend="${currentPage == totalPages - 1 ? 'disabled' : ''}">
+                        <a th:href="@{/admin/factures(page=${currentPage + 1}, keyword=${keyword})}">Suivant »</a>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+
+    </div>
+
+</body>
+</html>

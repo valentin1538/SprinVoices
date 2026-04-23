@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - SprinVoices</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: var(--bg-body);
+        }
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 1rem; /* Marge pour les petits écrans */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card login-card">
+        
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h1 style="margin-bottom: 0.2rem; font-size: 2.2rem;">
+                <span class="tech-font" style="color: var(--primary);">Sprin</span><span style="color: var(--secondary);">Voices</span>
+            </h1>
+            <p style="color: var(--text-muted); margin-top: 0; font-size: 0.95rem;">Portail d'authentification sécurisé</p>
+        </div>
+
+        <div th:if="${param.error}" class="alert alert-danger" style="text-align: center; font-size: 0.9rem;">
+            Identifiants ou mot de passe incorrects.
+        </div>
+        
+        <div th:if="${param.logout}" class="alert alert-success" style="text-align: center; font-size: 0.9rem;">
+            Vous avez été déconnecté avec succès.
+        </div>
+
+        <form th:action="@{/login}" method="post">
+            
+            <div class="form-group">
+                <label for="username">Identifiant</label>
+                <input type="text" id="username" name="username" required autofocus placeholder="identifant">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" required placeholder="••••••••">
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem; padding: 0.8rem; font-size: 1rem;">
+                Se connecter
+            </button>
+            
+        </form>
+        
+        <div style="text-align: center; margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1rem;">
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin: 0;">
+                🔒 Connexion chiffrée &bull; Accès restreint
+            </p>
+        </div>
+        
+    </div>
+
+</body>
+</html>

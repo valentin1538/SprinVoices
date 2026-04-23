@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mon Espace Client</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+    
+    <div class="container">
+        
+        <div class="flex-between">
+            <div>
+                <h1 style="margin-bottom: 0.5rem;">Bienvenue, <span th:text="${#authentication.name}" style="color: var(--primary);"></span></h1>
+                <p style="color: var(--text-muted); margin-top: 0;">Consultez et téléchargez les factures de vos projets en toute simplicité.</p>
+            </div>
+            
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-danger">Se déconnecter</button>
+            </form>
+        </div>
+
+        <div class="card table-wrapper" style="margin-top: 2rem; padding: 0;">
+            
+            <div style="padding: 1.5rem; border-bottom: 1px solid var(--border);">
+                <h3 style="margin: 0;">Historique de vos factures</h3>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>N° Facture</th>
+                        <th>Projet / Mission</th>
+                        <th>Créée le</th>
+                        <th>Facturée le</th>
+                        <th>Payée le</th>
+                        <th style="text-align: right;">Montant Total</th>
+                        <th style="text-align: center;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="invoice : ${invoices}">
+                        <td th:text="'#' + ${invoice.id}" class="tech-font" style="font-size: 1.1rem;"></td>
+                        <td th:text="${invoice.designation}" style="font-weight: 500;"></td>
+                        <td th:text="${#temporals.format(invoice.createdAt, 'dd/MM/yyyy')}"></td>
+                        <td th:text="${invoice.invoicedAt != null ? #temporals.format(invoice.invoicedAt, 'dd/MM/yyyy') : '-'}"></td>
+                        
+                        <td>
+                            <span th:if="${invoice.paidAt != null}" class="badge badge-success" th:text="${#temporals.format(invoice.paidAt, 'dd/MM/yyyy')}"></span>
+                            <span th:if="${invoice.paidAt == null}" style="color: var(--text-muted);">-</span>
+                        </td>
+                        
+                        <td th:text="${invoice.getTotal() + ' €'}" style="text-align: right; font-weight: 600;"></td>
+                        
+                        <td>
+                            <div style="display: flex; gap: 8px; justify-content: center; align-items: center;">
+                                <a th:href="@{/client/factures/{id}/pdf(id=${invoice.id})}" class="btn btn-danger" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" title="Télécharger le PDF">
+                                    📄 PDF
+                                </a>
+                                
+                                <form th:if="${invoice.invoicedAt != null and invoice.paidAt == null}" th:action="@{/client/factures/{id}/payer(id=${invoice.id})}" method="post" style="margin: 0;">
+                                    <button type="submit" class="btn btn-success" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="return confirm('Procéder au règlement sécurisé de cette facture ?');">
+                                        💳 Payer
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr th:if="${#lists.isEmpty(invoices)}">
+                        <td colspan="7" style="text-align: center; padding: 3rem; color: var(--text-muted); font-style: italic;">
+                            Vous n'avez aucune facture pour le moment.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+</html>

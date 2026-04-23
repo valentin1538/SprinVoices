@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Catalogue des Prestations</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <style>
+        /* CSS additionnel pour la pagination */
+        .pagination { display: flex; list-style: none; padding: 0; gap: 0.5rem; justify-content: center; margin-top: 1.5rem; }
+        .page-item a { padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: var(--radius-md); background: white; color: var(--text-main); font-weight: 500; }
+        .page-item a:hover { background: var(--bg-body); text-decoration: none; }
+        .page-item.active a { background: var(--primary); color: white; border-color: var(--primary); }
+        .page-item.disabled a { color: var(--text-muted); pointer-events: none; opacity: 0.6; }
+        
+        /* CSS pour la barre de recherche */
+        .search-bar { display: flex; gap: 0.5rem; }
+        .search-input { min-width: 300px; padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: var(--radius-md); }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        
+        <div class="flex-between">
+            <h1>Catalogue des Prestations IT</h1>
+            <div>
+                <a th:href="@{/admin/dashboard}" style="margin-right: 15px; color: var(--text-muted);">⬅ Retour au Dashboard</a>
+                <a th:href="@{/admin/produits/nouveau}" class="btn btn-success">+ Ajouter une prestation</a>
+            </div>
+        </div>
+
+        <div class="card" style="padding: 1rem 2rem; margin-bottom: 1rem;">
+            <form th:action="@{/admin/produits}" method="get" class="search-bar">
+                <input type="text" name="keyword" th:value="${keyword}" class="search-input" placeholder="Rechercher une expertise, un mot clé...">
+                <button type="submit" class="btn btn-primary">🔍 Filtrer</button>
+                <a th:href="@{/admin/produits}" class="btn" style="background: #f1f5f9; color: var(--text-muted);">Réinitialiser</a>
+            </form>
+        </div>
+        
+        <div th:if="${successMessage}" class="alert alert-success"><span th:text="${successMessage}"></span></div>
+        <div th:if="${errorMessage}" class="alert alert-danger"><span th:text="${errorMessage}"></span></div>
+
+        <div class="card table-wrapper" style="padding: 0;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Type de Prestation</th>
+                        <th>Pôle d'Expertise</th>
+                        <th>TJM (€)</th>
+                        <th style="text-align: right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="product : ${products}">
+                        <td th:text="${product.id}" class="tech-font"></td>
+                        <td th:text="${product.designation}" style="font-weight: 500;"></td>
+                        <td><span class="badge badge-neutral" th:text="${product.category}"></span></td>
+                        <td th:text="${product.unitPrice + ' €'}" style="font-weight: 600;"></td>
+                        <td style="text-align: right;">
+                            <a th:href="@{/admin/produits/editer/{id}(id=${product.id})}" class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">Modifier</a>
+                            <a th:href="@{/admin/produits/supprimer/{id}(id=${product.id})}" class="btn btn-danger" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; margin-left: 5px;" onclick="return confirm('Retirer ce service ?');">Supprimer</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(products)}">
+                        <td colspan="5" style="text-align: center; padding: 2rem; color: var(--text-muted); font-style: italic;">Aucune prestation trouvée.</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div th:if="${totalPages > 1}" style="padding: 1rem; border-top: 1px solid var(--border); background: #f8fafc;">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
+                        <a th:href="@{/admin/produits(page=${currentPage - 1}, keyword=${keyword})}">« Précédent</a>
+                    </li>
+                    
+                    <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" class="page-item" th:classappend="${currentPage == i ? 'active' : ''}">
+                        <a th:href="@{/admin/produits(page=${i}, keyword=${keyword})}" th:text="${i + 1}"></a>
+                    </li>
+                    
+                    <li class="page-item" th:classappend="${currentPage == totalPages - 1 ? 'disabled' : ''}">
+                        <a th:href="@{/admin/produits(page=${currentPage + 1}, keyword=${keyword})}">Suivant »</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

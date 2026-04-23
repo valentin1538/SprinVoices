@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle}">Dashboard Admin</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="flex-between">
+            <div>
+                <h1 th:text="${pageTitle}" style="margin-bottom: 0.5rem;">Dashboard Admin</h1>
+                <p style="color: var(--text-muted); margin-top: 0; font-size: 1.1rem;">Bienvenue sur l'espace d'administration de SprinVoices.</p>
+            </div>
+            
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-danger">Se déconnecter</button>
+            </form>
+        </div>
+
+        <div class="card" style="margin-top: 2rem;">
+            <h3 style="margin-bottom: 1.5rem; color: var(--primary); border-bottom: 2px solid var(--border); padding-bottom: 1rem;">Outils de Gestion</h3>
+            
+            <div class="flex-gap">
+                <a th:href="@{/admin/clients}" class="btn btn-primary" style="flex: 1; padding: 2rem 1rem; font-size: 1.1rem;">👥 Gérer les Partenaires</a>
+                <a th:href="@{/admin/produits}" class="btn btn-primary" style="flex: 1; padding: 2rem 1rem; font-size: 1.1rem;">💼 Gérer les Prestations</a>
+                <a th:href="@{/admin/factures}" class="btn btn-primary" style="flex: 1; padding: 2rem 1rem; font-size: 1.1rem;">📄 Suivi Missions & Factures</a>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

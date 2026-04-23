@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nouvelle Mission</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+    
+    <div class="container">
+        
+        <div class="flex-between">
+            <h1>Initialiser une Facture / Mission</h1>
+            <a th:href="@{/admin/factures}" class="btn" style="color: var(--text-muted); background: #f1f5f9;">⬅ Annuler</a>
+        </div>
+
+        <div class="card" style="max-width: 650px; margin: 0 auto;">
+            <form th:action="@{/admin/factures/sauvegarder}" th:object="${invoice}" method="post">
+                
+                <div class="form-group">
+                    <label>Intitulé du Projet ou de la Mission :</label>
+                    <input type="text" th:field="*{designation}" required placeholder="Ex: Refonte API Java - Phase 1">
+                </div>
+
+                <div class="form-group">
+                    <label>Partenaire Client :</label>
+                    <select th:field="*{customer.id}" required>
+                        <option value="" disabled selected>-- Sélectionner le client bénéficiaire --</option>
+                        <option th:each="cust : ${customers}" th:value="${cust.id}" th:text="${cust.corporateName}"></option>
+                    </select>
+                </div>
+                
+                <div style="text-align: right; margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary">Créer le brouillon et ajouter les intervenants ➔</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>

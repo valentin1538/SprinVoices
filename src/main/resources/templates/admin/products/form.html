@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fiche Prestation</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+    
+    <div class="container">
+        
+        <div class="flex-between">
+            <h1 th:text="${product.id == null ? 'Ajouter une Prestation' : 'Modifier la Prestation'}"></h1>
+            <a th:href="@{/admin/produits}" class="btn" style="color: var(--text-muted); background: #f1f5f9;">⬅ Annuler et retour</a>
+        </div>
+
+        <div class="card" style="max-width: 600px; margin: 0 auto;">
+            <form th:action="@{/admin/produits/sauvegarder}" th:object="${product}" method="post">
+                <input type="hidden" th:field="*{id}">
+                
+                <div class="form-group">
+                    <label>Type de Prestation :</label>
+                    <input type="text" th:field="*{designation}" required placeholder="Ex: Développeur Senior Java/Spring">
+                </div>
+                
+                <div class="form-group">
+                    <label>Pôle d'Expertise :</label>
+                    <input type="text" th:field="*{category}" required placeholder="Ex: Back-end, Base de données, Pilotage">
+                </div>
+                
+                <div class="form-group">
+                    <label>Description (Optionnel) :</label>
+                    <textarea th:field="*{description}" rows="4" placeholder="Détails de l'expertise attendue..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Taux Journalier Moyen (TJM - €) :</label>
+                    <input type="number" step="0.01" min="0" th:field="*{unitPrice}" required placeholder="Ex: 750.00">
+                </div>
+                
+                <hr style="margin: 2rem 0 1.5rem 0;">
+
+                <div style="text-align: right;">
+                    <button type="submit" class="btn btn-primary">Enregistrer la prestation</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>

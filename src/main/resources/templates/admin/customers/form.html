@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fiche Partenaire Client</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+    
+    <div class="container">
+        
+        <div class="flex-between">
+            <h1 th:text="${customer.id == null ? 'Enregistrer un nouveau Client' : 'Modifier la fiche Client'}"></h1>
+            <a th:href="@{/admin/clients}" class="btn" style="color: var(--text-muted); background: #f1f5f9;">⬅ Annuler</a>
+        </div>
+
+        <div class="card">
+            <form th:action="@{/admin/clients/sauvegarder}" th:object="${customer}" method="post">
+                <input type="hidden" th:field="*{id}">
+                
+                <div class="flex-gap">
+                    <div style="flex: 1; min-width: 300px;">
+                        <h3 style="margin-bottom: 1.5rem; color: var(--secondary);">Informations de facturation</h3>
+                        
+                        <div class="form-group">
+                            <label>Raison Sociale :</label>
+                            <input type="text" th:field="*{corporateName}" required placeholder="Ex: AXA IT Services">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Interlocuteur principal :</label>
+                            <input type="text" th:field="*{name}" required placeholder="Ex: Mme. Sophie Martin">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Adresse du siège social :</label>
+                            <textarea th:field="*{address}" required rows="4"></textarea>
+                        </div>
+                    </div>
+
+                    <div th:if="${customer.id == null}" style="flex: 1; min-width: 300px; background-color: #f8fafc; padding: 1.5rem; border-radius: var(--radius-md); border: 1px dashed var(--border);">
+                        <h3 style="margin-top: 0;">Accès à l'Extranet</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Ces identifiants permettront au client de télécharger ses factures PDF.</p>
+                        
+                        <div class="form-group">
+                            <label>Identifiant (Login) :</label>
+                            <input type="text" th:field="*{appUser.username}" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Mot de passe provisoire :</label>
+                            <input type="password" th:field="*{appUser.password}" required>
+                        </div>
+                    </div>
+                    
+                    <div th:if="${customer.id != null}" style="flex: 1; min-width: 300px;">
+                        <input type="hidden" th:field="*{appUser.id}">
+                        <input type="hidden" th:field="*{appUser.username}">
+                        <input type="hidden" th:field="*{appUser.password}">
+                        <input type="hidden" th:field="*{appUser.role}">
+                        <p style="background: #f1f5f9; padding: 1rem; border-radius: var(--radius-md); font-style: italic; font-size: 0.9rem;">
+                            Note : La gestion de la sécurité du compte client s'effectue dans le module de sécurité dédié.
+                        </p>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <div style="text-align: right;">
+                    <button type="submit" class="btn btn-primary">Enregistrer la fiche partenaire</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Détails de la Facture</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+    <div class="container">
+        
+        <div style="margin-bottom: 1.5rem;">
+            <a th:href="@{/admin/factures}" style="color: var(--text-muted);">⬅ Retour au suivi des factures</a>
+        </div>
+
+        <div class="card" style="border-left: 5px solid var(--primary);">
+            <div class="flex-between">
+                <div>
+                    <h1 style="margin-bottom: 0.5rem;">Facture <span class="tech-font" th:text="'#' + ${invoice.id}"></span></h1>
+                    <h2 th:text="${invoice.designation}" style="color: var(--secondary); margin-top: 0;"></h2>
+                    <p>Client : <strong th:text="${invoice.customer.corporateName}"></strong></p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Émise le : <span th:text="${#temporals.format(invoice.createdAt, 'dd/MM/yyyy HH:mm')}"></span></p>
+                </div>
+                
+                <div style="text-align: right;">
+                    <div style="margin-bottom: 1.5rem;">
+                        <span th:if="${invoice.paidAt != null}" class="badge badge-success">PAYÉE</span>
+                        <span th:if="${invoice.paidAt == null and invoice.invoicedAt != null}" class="badge badge-warning">FACTURÉE</span>
+                        <span th:if="${invoice.paidAt == null and invoice.invoicedAt == null}" class="badge badge-neutral">BROUILLON</span>
+                    </div>
+
+                    <form th:if="${invoice.invoicedAt == null}" th:action="@{/admin/factures/{id}/facturer(id=${invoice.id})}" method="post">
+                        <button type="submit" class="btn btn-warning">Valider et Émettre la facture</button>
+                    </form>
+
+                    <form th:if="${invoice.invoicedAt != null and invoice.paidAt == null}" th:action="@{/admin/factures/{id}/payer(id=${invoice.id})}" method="post">
+                        <button type="submit" class="btn btn-success">Confirmer le règlement</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            
+            <div th:if="${invoice.invoicedAt == null}" style="background: #f8fafc; padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 2rem; border: 1px solid var(--border);">
+                <h3 style="font-size: 1rem; margin-bottom: 1rem;">Ajouter un intervenant / service</h3>
+                <form th:action="@{/admin/factures/{id}/lignes(id=${invoice.id})}" th:object="${newRow}" method="post" style="display: flex; gap: 1rem; align-items: flex-end;">
+                    
+                    <div class="form-group" style="margin-bottom: 0; flex: 3;">
+                        <label>Expertise / Prestation :</label>
+                        <select th:field="*{product.id}" required>
+                            <option value="" disabled selected>-- Sélectionner le profil --</option>
+                            <option th:each="prod : ${products}" th:value="${prod.id}" th:text="${prod.designation + ' (TJM: ' + prod.unitPrice + '€)'}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0; flex: 1;">
+                        <label>Charge (J/H) :</label>
+                        <input type="number" step="1" min="1" th:field="*{quantity}" required placeholder="Ex: 10">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="height: 48px;">+ Ajouter</button>
+                </form>
+            </div>
+
+            <h3>Détail des prestations</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Profil Intervenant</th>
+                            <th>TJM (€)</th>
+                            <th>Jours / Hommes</th>
+                            <th style="text-align: right;">Total Ligne</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="row : ${invoice.invoiceRows}">
+                            <td th:text="${row.product.designation}" style="font-weight: 500;"></td>
+                            <td th:text="${row.product.unitPrice + ' €'}"></td>
+                            <td th:text="${row.quantity}"></td>
+                            <td th:text="${row.getAmount() + ' €'}" style="text-align: right; font-weight: bold;" class="tech-font"></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr style="background: #f8fafc;">
+                            <td colspan="3" style="text-align: right; font-weight: 600; padding: 1.5rem;">MONTANT TOTAL H.T. :</td>
+                            <td th:text="${invoice.getTotal() + ' €'}" style="text-align: right; font-weight: 800; font-size: 1.3rem; color: var(--secondary); padding: 1.5rem;" class="tech-font"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

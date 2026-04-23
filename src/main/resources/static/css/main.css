@@ -1,0 +1,255 @@
+/* ==========================================================================
+   VARIABLES GLOBALES (Thème SprinVoices - ESN Java/Oracle)
+   ========================================================================== */
+:root {
+    /* Couleurs Corporate Tech */
+    --primary: #0f172a;       /* Bleu très sombre (Presque noir) */
+    --primary-hover: #1e293b;
+    --secondary: #e65100;     /* Orange (Rappel Java) */
+    
+    /* Couleurs d'état */
+    --success: #16a34a;       /* Vert franc */
+    --success-hover: #15803d;
+    --danger: #dc2626;        /* Rouge Oracle */
+    --danger-hover: #b91c1c;
+    --warning: #f59e0b;       /* Jaune moutarde */
+    --warning-hover: #d97706;
+
+    /* Fonds et bordures */
+    --bg-body: #f1f5f9;       /* Gris classique (fond de la page) */
+    --bg-card: #ffffff;       /* Blanc pur (fond des conteneurs) */
+    --border: #cbd5e1;        /* Gris clair pour les lignes */
+    
+    /* Textes */
+    --text-main: #334155;
+    --text-muted: #64748b;
+
+    /* Formes et Ombres */
+    --radius-md: 4px;         /* Bords plus carrés, style logiciel d'entreprise */
+    --radius-lg: 8px;         /* Bords plus carrés pour les grandes cartes */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+/* ==========================================================================
+   TYPOGRAPHIE SPÉCIFIQUE TECH
+   ========================================================================== */
+.tech-font {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: bold;
+    color: var(--secondary);
+}
+
+/* ==========================================================================
+   RESET ET BASE
+   ========================================================================== */
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    margin: 0;
+    padding: 2rem 1rem;
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    color: var(--text-main);
+    font-weight: 600;
+    margin-top: 0;
+}
+
+h1 { font-size: 1.8rem; margin-bottom: 1.5rem; }
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+}
+
+/* ==========================================================================
+   LAYOUTS (Mise en page)
+   ========================================================================== */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 2rem;
+    border: 1px solid var(--border);
+    margin-bottom: 2rem;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.flex-gap {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   BOUTONS
+   ========================================================================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+}
+
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: var(--primary-hover); color: white; }
+
+.btn-success { background: var(--success); color: white; }
+.btn-success:hover { background: var(--success-hover); color: white; }
+
+.btn-danger { background: var(--danger); color: white; }
+.btn-danger:hover { background: var(--danger-hover); color: white; }
+
+.btn-warning { background: var(--warning); color: white; }
+.btn-warning:hover { background: var(--warning-hover); color: white; }
+
+/* ==========================================================================
+   TABLEAUX (Data Grids)
+   ========================================================================== */
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th {
+    background-color: #e2e8f0; /* Un peu plus sombre pour le thème IT */
+    padding: 1rem;
+    font-weight: 600;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+}
+
+td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+tr:last-child td { border-bottom: none; }
+tr:hover td { background-color: #f8fafc; }
+
+/* ==========================================================================
+   BADGES (Pour les statuts : PAYÉE, FACTURÉE, CRÉÉE)
+   ========================================================================== */
+.badge {
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-success { background: #dcfce7; color: #166534; } 
+.badge-warning { background: #fef3c7; color: #92400e; } 
+.badge-neutral { background: #f1f5f9; color: #475569; } 
+
+/* ==========================================================================
+   FORMULAIRES
+   ========================================================================== */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+input[type="text"], 
+input[type="number"], 
+input[type="password"], 
+select, 
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background-color: #f8fafc;
+    transition: all 0.2s;
+    font-family: inherit;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+/* Thème ESN : Focus avec une ombre subtile basée sur la couleur primaire sombre */
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.15); 
+}
+
+/* ==========================================================================
+   ALERTES (Messages Flash)
+   ========================================================================== */
+.alert {
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.alert-success {
+    background-color: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.alert-danger {
+    background-color: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}

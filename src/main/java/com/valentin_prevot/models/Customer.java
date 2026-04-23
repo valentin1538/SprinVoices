@@ -19,7 +19,6 @@ public class Customer {
     
     private String address;
 
-    // Un client est lié à un compte utilisateur pour se connecter
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private AppUser appUser;
