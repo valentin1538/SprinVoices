@@ -1,7 +1,6 @@
-# OBS - Structure Organisationnelle du Projet
+# OBS - Structure Organisationnelle du Projet (Équipe Augmentée)
 
 | Acteur | Rôle Principal | Responsabilités Clés |
 | :--- | :--- | :--- |
-| **Chef de Projet**  | Coordination | Suivi du planning (GANTT), gestion des risques et relation client. |
-| **Responsable Technique**  | Architecture | Conception de la base Oracle et définition de l'architecture Java. |
-| **Développeur Full-Stack**  | Implémentation | Développement des services Spring Boot et des vues Thymeleaf. |
+| **Chef de Projet & Dev Full-Stack** (Vous) | Pilote & Exécutant | Définition des besoins, validation de l'architecture, intégration du code, gestion globale du projet et tests. Prise de décision finale et relecture (code review). |
+| **Assistant IA (Gemini)** | Tech Lead / Co-Pilote | Génération de code, conseil sur l'architecture (Spring/Oracle), proposition de requêtes SQL. |

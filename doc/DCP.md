@@ -4,12 +4,12 @@
 ---
 
 ### 1. Contexte du projet
-L'entreprise **SprinVoices**, spécialisée dans les prestations de services numériques, souhaite disposer rapidement d'un module de facturation simple et fiable pour remplacer son système actuel basé sur des fichiers Excel. Ce module doit permettre de réduire les erreurs, d'accélérer la facturation et d'améliorer le suivi des paiements. Le projet est mené dans un contexte court et contraint, avec une durée totale de 6 jours, ce qui impose une organisation rigoureuse et une priorisation stricte des tâches.
+Notre entreprise, spécialisée dans les prestations de services informatiques, souhaite concevoir et intégrer son propre module de facturation interne baptisé **SprinVoices**. Cet outil sur-mesure a pour but de remplacer notre système de gestion actuel basé sur des fichiers Excel, afin de réduire les erreurs de saisie, d'accélérer l'émission des factures et d'optimiser le suivi des paiements. Ce projet de développement technologique, reposant sur une architecture **Java et Oracle**, est mené dans un contexte particulièrement court et contraint avec une durée totale fixée à 6 jours. Ce délai restreint impose à l'équipe de développement une organisation rigoureuse et une priorisation stricte des fonctionnalités à livrer pour ce premier MVP.
 
 ---
 
 ### 2. Objectifs du projet
-* **Objectif principal :** Développer en 6 jours un module de facturation opérationnel permettant de gérer devis, factures et paiements.
+* **Objectif principal :** Développer en 6 jours un module de facturation opérationnel permettant de gérer factures et paiements liés à des prestations.
 * **Objectifs secondaires :**
     * Assurer une interface simple et intuitive.
     * Garantir la cohérence et la sécurité des données via Oracle.
@@ -45,7 +45,8 @@ L'entreprise **SprinVoices**, spécialisée dans les prestations de services num
 | :--- | :--- |
 | **Direction SprinVoices** | Commanditaire |
 | **Service administratif / Clients finaux** | Utilisateurs finaux |
-| **Équipe projet (Chef de projet, Devs)** | Analyse, conception, développement, tests |
+| **Développeur Full-Stack (Solo)** | Chef de projet, analyse, conception, développement |
+| **Intelligence Artificielle (Gemini)** | Support à l'architecture, aide à la génération de code et optimisation des scripts SQL |
 | **Référent pédagogique** | Validation et suivi |
 
 ---
