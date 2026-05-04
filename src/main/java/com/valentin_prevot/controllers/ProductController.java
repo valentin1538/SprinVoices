@@ -30,7 +30,7 @@ public class ProductController {
             @RequestParam(defaultValue = "") String keyword,
             Model model) {
             
-        int pageSize = 10;
+        int pageSize = 5;
         Pageable pageable = PageRequest.of(page, pageSize);
         
         Page<Product> productPage = productService.searchAndPaginate(keyword, pageable);

@@ -66,6 +66,10 @@ mvn clean install
 mvn spring-boot:run
 ```
 
+**Login admin géneré par defaut :**
+*username : admin*
+*pswd : admin123*
+
 ## 🛡 Focus Sécurité et Intégrité
 Ce projet intègre une protection multicouche des données :
 

@@ -10,6 +10,7 @@
 
     <div class="container">
         
+        <!-- En-tête -->
         <div class="flex-between">
             <div>
                 <h1 th:text="${pageTitle}" style="margin-bottom: 0.5rem;">Dashboard Admin</h1>
@@ -21,13 +22,43 @@
             </form>
         </div>
 
+        <!-- Section des Statistiques (KPIs) -->
+        <div th:if="${stats != null}" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+            
+            <div class="card" style="text-align: center; padding: 1.5rem;">
+                <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Clients Partenaires</h3>
+                <p th:text="${stats.totalCustomers}" style="font-size: 3rem; font-weight: bold; color: var(--primary); margin: 0; line-height: 1;">0</p>
+            </div>
+
+            <div class="card" style="text-align: center; padding: 1.5rem;">
+                <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Factures Émises</h3>
+                <p th:text="${stats.totalInvoices}" style="font-size: 3rem; font-weight: bold; color: var(--primary); margin: 0; line-height: 1;">0</p>
+            </div>
+
+            <div class="card" style="text-align: center; padding: 1.5rem; border-bottom: 4px solid #10b981;">
+                <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">CA Encaissé (HT)</h3>
+                <p style="font-size: 2.2rem; font-weight: bold; color: #10b981; margin: 0; line-height: 1.2;">
+                    <span th:text="${#numbers.formatDecimal(stats.totalRevenuePaid, 1, 'COMMA', 2, 'POINT')}">0.00</span> €
+                </p>
+            </div>
+
+            <div class="card" style="text-align: center; padding: 1.5rem; border-bottom: 4px solid #f59e0b;">
+                <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">CA en Attente (HT)</h3>
+                <p style="font-size: 2.2rem; font-weight: bold; color: #f59e0b; margin: 0; line-height: 1.2;">
+                    <span th:text="${#numbers.formatDecimal(stats.totalRevenuePending, 1, 'COMMA', 2, 'POINT')}">0.00</span> €
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Section Outils de Gestion -->
         <div class="card" style="margin-top: 2rem;">
             <h3 style="margin-bottom: 1.5rem; color: var(--primary); border-bottom: 2px solid var(--border); padding-bottom: 1rem;">Outils de Gestion</h3>
             
             <div class="flex-gap">
-                <a th:href="@{/admin/clients}" class="btn btn-primary" style="flex: 1; padding: 2rem 1rem; font-size: 1.1rem;">👥 Gérer les Partenaires</a>
-                <a th:href="@{/admin/produits}" class="btn btn-primary" style="flex: 1; padding: 2rem 1rem; font-size: 1.1rem;">💼 Gérer les Prestations</a>
-                <a th:href="@{/admin/factures}" class="btn btn-primary" style="flex: 1; padding: 2rem 1rem; font-size: 1.1rem;">📄 Suivi Missions & Factures</a>
+                <a th:href="@{/admin/clients}" class="btn btn-primary" style="flex: 1; padding: 2rem 1rem; font-size: 1.1rem; text-align: center;">👥 Gérer les Partenaires</a>
+                <a th:href="@{/admin/produits}" class="btn btn-primary" style="flex: 1; padding: 2rem 1rem; font-size: 1.1rem; text-align: center;">💼 Gérer les Prestations</a>
+                <a th:href="@{/admin/factures}" class="btn btn-primary" style="flex: 1; padding: 2rem 1rem; font-size: 1.1rem; text-align: center;">📄 Suivi Missions & Factures</a>
             </div>
         </div>
 

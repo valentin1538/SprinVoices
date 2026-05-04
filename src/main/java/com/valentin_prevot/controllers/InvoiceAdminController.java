@@ -34,7 +34,7 @@ public class InvoiceAdminController {
             @RequestParam(defaultValue = "") String keyword,
             Model model) {
             
-        int pageSize = 10; // Pour les factures, on en met 10 par page c'est mieux
+        int pageSize = 10;
         Pageable pageable = PageRequest.of(page, pageSize);
         
         Page<Invoice> invoicePage = invoiceService.searchAndPaginate(keyword, pageable);
